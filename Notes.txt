@@ -16,7 +16,7 @@ interfaces = 192.168.68.54/255.255.252.0
 Windows 11 settings
 
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters]
-"SMB1"=dword:00000001
+NOT NEEDED - "SMB1"=dword:00000001
 "AllowInsecureGuestAuth"=dword:00000001
 "RequireSecuritySignature"=dword:00000000
 "EnableSecuritySignature"=dword:00000000
