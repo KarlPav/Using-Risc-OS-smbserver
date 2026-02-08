@@ -17,7 +17,7 @@ Windows 11 settings
 
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters]
 NOT NEEDED - "SMB1"=dword:00000001
-"AllowInsecureGuestAuth"=dword:00000001
+NOT NEEDED - "AllowInsecureGuestAuth"=dword:00000001
 "RequireSecuritySignature"=dword:00000000
 "EnableSecuritySignature"=dword:00000000
 
