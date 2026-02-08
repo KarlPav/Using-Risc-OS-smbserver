@@ -1,0 +1,63 @@
+Version of !smbserver that works
+https://www.gag.de/software/smbserver008-MiliusStubs.zip
+from
+https://www.gag.de/software/smbserver.html
+
+!smbserver settings on the Risc OS machine
+See file smb.conf
+This file lives in "<smbserver$Dir>.Resources"
+
+this is the "computer name" that other computers will look for
+netbios name = RISCOS
+
+this is the IP of the riscos machine with the subnet mask, format is IP/Subnet Mask
+interfaces = 192.168.68.54/255.255.252.0
+
+Windows 11 settings
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters]
+"SMB1"=dword:00000001
+"AllowInsecureGuestAuth"=dword:00000001
+"RequireSecuritySignature"=dword:00000000
+"EnableSecuritySignature"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa]
+"LmCompatibilityLevel"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters]
+"EnableLMHOSTS"=dword:00000001
+
+Checking we can find the SMB server on the Risc OS machine
+Open CMD as an administrator
+nbtstat -a 192.168.68.54
+
+This results in the following print out
+Ethernet 2:
+Node IpAddress: [***.***.***.***] Scope Id: []
+
+           NetBIOS Remote Machine Name Table
+
+       Name               Type         Status
+    ---------------------------------------------
+    RISCOS         <00>  UNIQUE      Registered
+    RISCOS         <03>  UNIQUE      Registered
+    RISCOS         <20>  UNIQUE      Registered
+    WORKGROUP      <00>  GROUP       Registered
+    WORKGROUP      <1E>  GROUP       Registered
+
+    MAC Address = 00-00-00-00-00-00
+
+We are looking for this line
+RISCOS         <20>  UNIQUE      Registered
+
+RISCOS is the netbios name we have set in smb.conf and <20> is the SMB server
+We are read to map the drive now
+
+Map drive
+\\[netbios name]\[share]
+We get these from the smb.conf file
+Based on the smb.conf in these notes we would map this drive
+ \\RISCOS\Downloads
+
+When mapping it will ask for a username and password, you will need to enter something for the mapping to work
+though what is entered is irrelevant, its not checked not set in !smbserver
